@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
+
+    <script>
+        function add_card(data) {
+            var doc = document.getElementById ("repos")
+            var html = `
+            <div class="text-center card shadow-sm mt-2 mb-0 m-1" style="max-width: 200px; min-width: 200px;">
+            <div class="card-body">
+            <h5 class="card-title">${data.name}</h5>
+            <p class="card-text">${data.description}
+            </p>
+            <a href="httpds://github.com/${data.full_name}" class="btn btn-dark">visit</a>
+            </div>
+            </div>`
+            
+            doc.innerHTML = doc.innerHTML + html
+        }
+        var username = "im-shamil"
+        var url = `https://api.github.com/users/${username}/repos`
+        
+        fetch(url).then (resp => {
+            resp.json().then (data => {
+                if (!data) return
+                data.forEach (rep => {if (rep.name == username) return; add_card(rep)})
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <nav class="navbar shadow-sm navbar-light bg-light">
+        <span class="navbar-brand mb-0 mt-0 m-2 font-Monospace h4">XProjects</span>
+    </nav>
+    <div class="font-Monospace">
+        <p class="mt-3">here you can find some cool projects that may help you</p>
+    </div>
+    <div id="repos" class="d-flex flex-row flex-nowrap overflow-auto">
+    </div>
+</body>
+</html>
